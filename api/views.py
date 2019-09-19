@@ -13,6 +13,7 @@ from rest_framework.views import Response
 from api.models import Notification, NotificationTemplate, NotificationType
 from api.serializers import NotificationSerializer, \
     NotificationTemplateSerializer, NotificationModelSerializer
+from api.utils.send_email import send_email_template
 
 
 class NotificationViewSet(ViewSet):
@@ -25,12 +26,14 @@ class NotificationViewSet(ViewSet):
         :param request:
         :return:
         """
+
         serializer_class = NotificationSerializer(data=request.data)
         try:
             request.data._mutable = True
         except AttributeError:
             pass
         if serializer_class.is_valid():
+            # import ipdb; ipdb.set_trace()
             template_id = NotificationTemplate.objects.get(
                 name__icontains=request.data.get("template_name"),
             ).id
@@ -42,6 +45,7 @@ class NotificationViewSet(ViewSet):
             serializer_class = NotificationModelSerializer(data=request.data)
             if serializer_class.is_valid():
                 serializer_class.save()
+                send_email_notification(request.data.get("template_name"),request.data.get("receiver"),request.data.get("subject"),**eval(request.data.get('params')))
                 call_command("send_notifications")
             else:
                 return Response(

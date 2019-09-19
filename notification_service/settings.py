@@ -30,29 +30,38 @@ INSTALLED_APPS = (
     'api',
 )
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.environ['DB_NAME'],
+#         'USER': os.environ['DB_USER'],
+#         'PASSWORD': os.environ['DB_PASSWORD'],
+#         'HOST': os.environ['DB_HOST'],
+#         'PORT': os.environ['DB_PORT'],
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-EMAIL_HOST = os.environ['EMAIL_HOST']
+# EMAIL_HOST = os.environ['EMAIL_HOST']
+# EMAIL_PORT = os.environ['EMAIL_PORT']
+# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+# EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+# EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
+# DEBUG = os.environ['DEBUG']
 
-EMAIL_PORT = os.environ['EMAIL_PORT']
-
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-
-EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
-
-DEBUG = os.environ['DEBUG']
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'emailfortest34@gmail.com'
+EMAIL_HOST_PASSWORD = 'emailfortest@3214'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEBUG = True
 SECRET_KEY = '-s#6$110#_(p&6#5-_8dljcf10v86@-48%qp-#0iujcj@2$zl*'
 
 ALLOWED_HOSTS = ['*']

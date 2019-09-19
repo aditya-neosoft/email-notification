@@ -13,6 +13,9 @@ class NotificationType(models.Model):
      """
     code = models.CharField(max_length=40, unique=True, choices=NOTIFICATION_TYPE_CHOICES)
 
+    def __str__(self):
+        return self.code
+
 
 class NotificationTemplate(models.Model):
     """
@@ -47,3 +50,5 @@ class Notification(models.Model):
         notification_type_handler = get_notification_type_handler(self.type.code.lower())
         notification_type_handler.validate(self.receiver)
         super().clean()
+    def __str__(self):
+        return self.template.name
